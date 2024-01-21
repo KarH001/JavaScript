@@ -1,50 +1,151 @@
-// let num = 42
-// let firstName = 'Karen'
-// const isProgrammer = true
-// isProgrammer = folse // error
+/* Theory
+// const array = [1, 2, 3, 5, 20, 42, 111]
+// // const arrayStrings = ['a', 'b', 'c', null, 12]
+// // const array = new Array(1, 2, 3, 5, 20, 42)
 
-//inchpes karox enq popoxakanner@ anvanel
-
-/* 
-let $ = 'test'
-let first_name = 'first' // bad
-myNum = 'name' // good
-let num42 = 35
+// // console.log(array.length)
+// console.log(array[0])
+// console.log(array[array.length - 1]) // array[6 - 1]
+// // console.log(array[10])
+// array[0] = 'Privet!'
+// console.log(array)
+// array[array.length] = 'becon'
 */
 
-//inchpes chenq karox
+const inputElement = document.getElementById('title')
+const createBtn = document.getElementById('create')
+const listElement = document.getElementById('list')
 
-/* 
-let 42num = '11'
-let my-num = 11
-let nonst
+// console.log(inputElement.value)
+
+// const notes = ['записать блок про массивы', 'рассказать теорию объектов']
+
+// function render() {
+//   // for (let i = 0; i < notes.length; i++) {
+//   //   listElement.insertAdjacentHTML('beforeend', getNoteTemplate(notes[i]))
+//   // }
+
+//   for (let note of notes) {
+//     listElement.insertAdjacentHTML('beforeend', getNoteTemplate(note))
+//   }
+// }
+
+// render()
+
+// createBtn.onclick = function () {
+//   if (inputElement.value.length === 0) {
+//     return
+//   }
+//   // listElement.innerHTML =
+//   listElement.insertAdjacentHTML(
+//     'beforeend',
+//     getNoteTemplate(inputElement.value)
+//   )
+//   inputElement.value = ''
+// }
+
+// function getNoteTemplate(title) {
+//   return `
+//     <li
+//       class="list-group-item d-flex justify-content-between align-items-center"
+//     >
+//       <span>${title}</span>
+//       <span>
+//         <span class="btn btn-small btn-success">&check;</span>
+//         <span class="btn btn-small btn-danger">&times;</span>
+//       </span>
+//     </li>
+//   `
+// }
+
+/**
+ * Object Theory
+ 
+const person = {
+  firstName: 'Vladilen',
+  lastName: 'Minin',
+  year: 1993,
+  hasGirlfriend: false,
+  languages: ['ru', 'en', 'de'],
+  getFullName: function () {
+    console.log(person.firstName + ' ' + person.lastName)
+  },
+}
+
+console.log(person.year)
+console.log(person['languages'])
+const key = 'hasGirlfriend'
+console.log(person[key])
+person.hasGirlfriend = true
+console.log(person[key])
+person.getFullName()
 */
 
-// inchpes nayel popoxakanum inch ka
+const notes = [
+  {
+    title: 'записать блок про массивы',
+    completed: false,
+  },
+  {
+    title: 'рассказать теорию объектов',
+    completed: true,
+  },
+]
 
-/*
-alert(firstName)
-console.log('test',firstname)
-*/
+function render() {
+  listElement.innerHTML = ''
+  if (notes.length === 0) {
+    listElement.innerHTML = '<p>Нет элементов</p>'
+  }
+  for (let i = 0; i < notes.length; i++) {
+    listElement.insertAdjacentHTML('beforeend', getNoteTemplate(notes[i], i))
+  }
+}
+render()
 
-// gortsoxutyunner popoxakannerov
+createBtn.onclick = function () {
+  if (inputElement.value.length === 0) {
+    return
+  }
+  const newNote = {
+    title: inputElement.value,
+    completed: false,
+  }
+  notes.push(newNote)
+  render()
+  inputElement.value = ''
+}
 
-// console.log(num+10)
-// console.log(num-10)
-// console.log(num*10)
-// console.log(num/10)
+listElement.onclick = function (event) {
+  if (event.target.dataset.index) {
+    const index = parseInt(event.target.dataset.index)
+    const type = event.target.dataset.type
 
-// let num2 = num + 10
-// console.log (num,num2)
+    if (type === 'toggle') {
+      notes[index].completed = !notes[index].completed
+    } else if (type === 'remove') {
+      notes.splice(index, 1)
+    }
 
-// num = num2 - num 
-
-// console.log(num,num2)
-
-// const fullName = firstName + ' ' + 'Hunanyan'
-// console.log(fullName)
-
-
-
-
-
+    render()
+  }
+}
+ 
+function getNoteTemplate(note, index) {
+  return `
+    <li
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      <span class="${note.completed ? 'text-decoration-line-through' : ''}">${
+    note.title
+  }</span>
+      <span>
+        <span class="btn btn-small btn-${
+          note.completed ? 'warning' : 'success'
+        }" data-index="${index}" data-type="toggle">&check;</span>
+        <span class="btn btn-small btn-danger" data-type="remove" data-index="${index}">&times;</span>
+      </span>
+    </li>
+  `
+}
+ 
