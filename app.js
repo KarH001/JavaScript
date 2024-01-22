@@ -130,7 +130,7 @@ listElement.onclick = function (event) {
     render()
   }
 }
- 
+
 function getNoteTemplate(note, index) {
   return `
     <li
@@ -148,4 +148,3 @@ function getNoteTemplate(note, index) {
     </li>
   `
 }
- 
